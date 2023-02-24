@@ -1,0 +1,64 @@
+﻿@model ProductRecommendationModel.Model.ShoppingCartViewModel
+@{
+    ViewData["Title"] = "Shopping Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+@if (Model.ShoppingCartProducts.Count == 0)
+{
+    <div><p>Sepetinizde ürün bulunmamaktadır.</p></div>
+}
+else
+{
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ürün Adı</th>
+            <th>Marka</th>
+            <th>Fiyat (TL)</th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var product in Model.ShoppingCartProducts)
+    {
+<tr>
+    <td>@product.ProductName</td>
+    <td>@product.Brand</td>
+    <td>@product.Price</td>
+    <td>
+        <a asp-controller="Product" asp-action="DeleteShoppingCart" asp-route-id="@product.ProductId" class="btn btn-danger">Sepetten Çıkar</a>
+    </td>
+</tr>
+    }
+</table>
+}
+<h3>Bu Ürünleri Alanlar Bunları da Aldı</h3>
+@if (Model.RecommendedProducts.Count == 0)
+{
+    <div><p>Önerilecek ürün bulunmamaktadır.</p></div>
+}
+else
+{
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ürün Adı</th>
+            <th>Marka</th>
+            <th>Fiyat (TL)</th>
+            <th>Öneri Skoru</th>
+        </tr>
+    </thead>
+    @foreach (var recommendedProduct in Model.RecommendedProducts)
+    {
+<tr>
+    <td>@recommendedProduct.RecommendedProductName</td>
+    <td>@recommendedProduct.Brand</td>
+    <td>@recommendedProduct.Price</td>
+    <td>@recommendedProduct.Score</td>
+</tr>
+    }
+</table>
+}
+
+
